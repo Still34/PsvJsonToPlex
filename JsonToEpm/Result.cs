@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JsonToEpm
+namespace PsvJsonToPlex
 {
     public class Result
     {

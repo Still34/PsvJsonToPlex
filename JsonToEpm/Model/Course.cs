@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JsonToEpm
+namespace PsvJsonToPlex.Model
 {
     public class Course
     {

@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using CommandLine;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using PsvJsonToPlex.Model;
 
-namespace JsonToEpm
+namespace PsvJsonToPlex
 {
     public class MainProgram
     {

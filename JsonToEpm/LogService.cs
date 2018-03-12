@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using PsvJsonToPlex.Model;
 
-namespace JsonToEpm
+namespace PsvJsonToPlex
 {
     public class LogService
     {
