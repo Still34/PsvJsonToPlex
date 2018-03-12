@@ -55,6 +55,7 @@ namespace PsvJsonToPlex
                         trimmedCourse = trimmedCourse.Substring(1, trimmedCourse.Length - 2);
                     _logService.Log(LogLevel.Debug, $"Text to be deserialized: {trimmedCourse}");
                     var courseInfo = JsonConvert.DeserializeObject<Course>(trimmedCourse);
+                    RenameImage(path, options);
                     await CreateMetadataAsync(path, courseInfo, options);
                     await CreateSummaryAsync(path, courseInfo, options);
                 }
@@ -65,6 +66,15 @@ namespace PsvJsonToPlex
             }
 
             return Result.FromSuccess();
+        }
+
+        public void RenameImage(string path, Options options)
+        {
+            if (options.IsSimulation) return;
+            if (File.Exists(Path.Combine(path, "image.jpg")))
+            {
+                File.Move(Path.Combine(path, "image.jpg"), Path.Combine(path, "poster.jpg"));
+            }
         }
 
         public Task CreateSummaryAsync(string path, Course course, Options options)
