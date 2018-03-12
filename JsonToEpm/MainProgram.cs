@@ -18,7 +18,6 @@ namespace PsvJsonToPlex
             Parser.Default.ParseArguments<Options>(args).WithParsed(async x =>
             {
                 _logService = new LogService(new LoggerFactory(), x);
-                _logService.Log(LogLevel.Information, $"Work path: {x.WorkDirectory}");
                 var result = await new MainProgram().StartAsync(x);
                 _logService.Log(result);
             });
@@ -28,7 +27,7 @@ namespace PsvJsonToPlex
         {
             var pathTest = PathTest(options.WorkDirectory);
             if (!pathTest.IsSuccess) return Result.FromFailure("Invalid file directory.", pathTest.Exception);
-
+            _logService.Log(LogLevel.Information, $"Work path: {options.WorkDirectory}");
             var courseFiles = Directory.GetFiles(options.WorkDirectory, "course-info.json",
                 SearchOption.AllDirectories);
             foreach (var courseFile in courseFiles)
@@ -43,6 +42,7 @@ namespace PsvJsonToPlex
                         "Both metadata and summary exists and force scan is not specified, skipping...");
                     continue;
                 }
+
                 var courseFileContent = await File.ReadAllTextAsync(courseFile);
                 var courseInfo = JsonConvert.DeserializeObject<Course>(courseFileContent);
                 await CreateMetadataAsync(path, courseInfo);
