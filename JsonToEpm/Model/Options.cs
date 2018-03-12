@@ -12,5 +12,8 @@ namespace PsvJsonToPlex.Model
 
         [Option('d', "debug", Default = false, HelpText = "Enables verbose logging.")]
         public bool IsDebug { get; set; }
+
+        [Option('s', Default = false, HelpText = "Enables simulation (no files will be affected).")]
+        public bool IsSimulation { get; set; }
     }
 }

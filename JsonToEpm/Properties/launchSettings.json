@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PsvJsonToPlex": {
+      "commandName": "Project",
+      "commandLineArgs": "-w \"D:\\Courses\" -f -d -s"
+    }
+  }
+}
