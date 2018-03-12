@@ -1,18 +1,27 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CommandLine;
 
 namespace JsonToEpm
 {
-    class PsvToEpm
+    public class PsvToEpm
     {
-        static Task Main(string[] args) => new PsvToEpm().StartAsync(args);
-
-        public async Task StartAsync(string[] startupPath)
+        private static async Task Main(string[] args)
         {
-            var path = startupPath.FirstOrDefault();
-            Directory.EnumerateFiles(path, "course-info.json");
+            Parser.Default.ParseArguments<Options>(args).WithParsed(async x => await new PsvToEpm().StartAsync(x));
         }
+
+        public async Task StartAsync(Options options)
+        {
+            
+        }
+    }
+
+    public class Options
+    {
+        [Option('f', "force", Default = false, HelpText = "Force rebuild all summary files.")]
+        public bool EnforceScan { get; set; }
+
+        [Option(Required = true, HelpText = "The directory to scan in.")]
+        public string ScanDirectory { get; set; }
     }
 }
