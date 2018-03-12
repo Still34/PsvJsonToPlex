@@ -3,15 +3,21 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using CommandLine;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace JsonToEpm
 {
     public class PsvToEpm
     {
+        private static LogService _logService;
         private static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<Options>(args).WithParsed(async x => await new PsvToEpm().StartAsync(x));
+            _logService = new LogService(new LoggerFactory());
+            Parser.Default.ParseArguments<Options>(args).WithParsed(async x =>
+            {
+                var result = await new PsvToEpm().StartAsync(x);
+            });
         }
 
         public async Task<Result> StartAsync(Options options)
@@ -32,6 +38,7 @@ namespace JsonToEpm
                 await CreateMetadataAsync(path, courseInfo);
                 await CreateSummaryAsync(path, courseInfo);
             }
+
             return Result.FromSuccess();
         }
 
@@ -42,7 +49,7 @@ namespace JsonToEpm
 
         public Task CreateMetadataAsync(string path, Course course)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.AppendLine("[metadata]");
             sb.AppendLine($"release={course.ReleaseDate:yyyy-MM-dd}");
             sb.AppendLine("studio=Pluralsight");
