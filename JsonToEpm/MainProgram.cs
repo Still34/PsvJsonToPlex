@@ -28,7 +28,7 @@ namespace PsvJsonToPlex
             var pathTest = PathTest(options.WorkDirectory);
             if (!pathTest.IsSuccess) return Result.FromFailure("Invalid file directory.", pathTest.Exception);
 
-            var courseFiles = Directory.EnumerateFiles(options.WorkDirectory, "course-info.json",
+            var courseFiles = Directory.GetFiles(options.WorkDirectory, "course-info.json",
                 SearchOption.AllDirectories);
             foreach (var courseFile in courseFiles)
             {
