@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using CommandLine;
@@ -16,7 +17,9 @@ namespace PsvJsonToPlex
         private static async Task Main(string[] args)
         {
             Options options = null;
-            Parser.Default.ParseArguments<Options>(args).WithParsed(x => options = x);
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(x => options = x)
+                .WithNotParsed(x => Environment.Exit(0));
             _logService = new LogService(new LoggerFactory(), options);
             var result = await new MainProgram().StartAsync(options);
             _logService.Log(result);
