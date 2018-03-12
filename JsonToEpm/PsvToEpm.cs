@@ -11,6 +11,7 @@ namespace JsonToEpm
     public class PsvToEpm
     {
         private static LogService _logService;
+
         private static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args).WithParsed(async x =>
@@ -34,7 +35,12 @@ namespace JsonToEpm
                 _logService.Log(LogLevel.Debug, $"Processing in {path}...");
                 if (File.Exists(Path.Combine(path, "show.metadata")) &&
                     File.Exists(Path.Combine(path, "show.summary")) &&
-                    !options.EnforceScan) continue;
+                    !options.EnforceScan)
+                {
+                    _logService.Log(LogLevel.Debug,
+                        "Both metadata and summary exists and force scan is not specified, skipping...");
+                    continue;
+                }
                 var courseFileContent = await File.ReadAllTextAsync(courseFile);
                 var courseInfo = JsonConvert.DeserializeObject<Course>(courseFileContent);
                 await CreateMetadataAsync(path, courseInfo);
@@ -46,6 +52,7 @@ namespace JsonToEpm
 
         public Task CreateSummaryAsync(string path, Course course)
         {
+            _logService.Log(LogLevel.Information, $"Writing summary for {course.Title}...");
             return File.WriteAllTextAsync(path, course.Description);
         }
 
@@ -56,6 +63,7 @@ namespace JsonToEpm
             sb.AppendLine($"release={course.ReleaseDate:yyyy-MM-dd}");
             sb.AppendLine("studio=Pluralsight");
             sb.AppendLine($"genre={course.Level}");
+            _logService.Log(LogLevel.Information, $"Writing metadata for {course.Title}...");
             return File.WriteAllTextAsync(path, sb.ToString());
         }
 
