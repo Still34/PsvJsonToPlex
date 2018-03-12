@@ -18,6 +18,7 @@ namespace PsvJsonToPlex
             Parser.Default.ParseArguments<Options>(args).WithParsed(async x =>
             {
                 _logService = new LogService(new LoggerFactory(), x);
+                _logService.Log(LogLevel.Information, $"Work path: {x.WorkDirectory}");
                 var result = await new MainProgram().StartAsync(x);
                 _logService.Log(result);
             });
