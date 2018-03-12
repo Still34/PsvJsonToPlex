@@ -82,7 +82,7 @@ namespace PsvJsonToPlex
             sb.AppendLine("[metadata]");
             sb.AppendLine($"release={course.ReleaseDate:yyyy-MM-dd}");
             sb.AppendLine("studio=Pluralsight");
-            sb.AppendLine($"genre={course.Level}");
+            sb.AppendLine($"genres={course.Level}");
             _logService.Log(LogLevel.Information, $"Writing metadata for {course.Title}...");
             _logService.Log(LogLevel.Debug, $"Metadata output:\n{sb}");
             return options.IsSimulation
