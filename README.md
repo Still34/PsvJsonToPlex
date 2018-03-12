@@ -3,7 +3,7 @@
 # PsvJsonToPlex
 This is meant to be a supplement for [PsvDecryptCore](https://github.com/Still34/PsvDecryptCore). 
 
-The tool converts the `course-info.json` dumped by PsvDecrpytCore into Plex Extended Personal Media Scanner supported format.
+The tool converts the `course-info.json` dumped by PsvDecrpytCore into [Plex Extended Personal Media Scanner](https://bitbucket.org/mjarends/extendedpersonalmedia-agent.bundle) supported format.
 
 # Command-line Arguments
 
