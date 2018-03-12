@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace JsonToEpm
 {
-    public class PsvToEpm
+    public class MainProgram
     {
         private static LogService _logService;
 
@@ -17,7 +17,7 @@ namespace JsonToEpm
             Parser.Default.ParseArguments<Options>(args).WithParsed(async x =>
             {
                 _logService = new LogService(new LoggerFactory(), x);
-                var result = await new PsvToEpm().StartAsync(x);
+                var result = await new MainProgram().StartAsync(x);
                 _logService.Log(result);
             });
         }
