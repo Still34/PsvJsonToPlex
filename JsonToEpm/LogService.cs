@@ -5,14 +5,17 @@ namespace JsonToEpm
     public class LogService
     {
         private readonly ILogger _logger;
+        private readonly Options _options;
 
-        public LogService(ILoggerFactory factory)
+        public LogService(ILoggerFactory factory, Options options)
         {
+            _options = options;
             _logger = factory.AddConsole().CreateLogger("Main");
         }
 
         public void Log(LogLevel logLevel, string info)
         {
+            if (!_options.IsDebug && logLevel == LogLevel.Debug) return;
             _logger.Log(logLevel, 0, info, null, (s, exception) => s?.ToString());
         }
 

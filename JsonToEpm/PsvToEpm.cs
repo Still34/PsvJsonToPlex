@@ -13,10 +13,11 @@ namespace JsonToEpm
         private static LogService _logService;
         private static void Main(string[] args)
         {
-            _logService = new LogService(new LoggerFactory());
             Parser.Default.ParseArguments<Options>(args).WithParsed(async x =>
             {
+                _logService = new LogService(new LoggerFactory(), x);
                 var result = await new PsvToEpm().StartAsync(x);
+                _logService.Log(result);
             });
         }
 
@@ -30,6 +31,7 @@ namespace JsonToEpm
             foreach (var courseFile in courseFiles)
             {
                 var path = Path.GetPathRoot(courseFile);
+                _logService.Log(LogLevel.Debug, $"Processing in {path}...");
                 if (File.Exists(Path.Combine(path, "show.metadata")) &&
                     File.Exists(Path.Combine(path, "show.summary")) &&
                     !options.EnforceScan) continue;
