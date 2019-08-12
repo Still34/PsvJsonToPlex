@@ -1,18 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
-using PsvJsonToPlex.Model;
 
 namespace PsvJsonToPlex
 {
     public class LogService
     {
         private readonly ILogger _logger;
-        private readonly Options _options;
 
-        public LogService(ILoggerFactory factory, Options options)
+        public LogService(ILoggerFactory factory)
         {
-            _options = options;
             _logger = factory
-                .AddConsole(options.IsDebug ? LogLevel.Debug : LogLevel.Information)
                 .CreateLogger("Main");
         }
 
